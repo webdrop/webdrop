@@ -1,0 +1,27 @@
+<link rel="import" href="invitation-link-behavior.html">
+<link rel="import" href="../../bower_components/paper-tooltip/paper-tooltip.html">
+<dom-module id="invitation-link">
+    <template>
+        <style>
+        :host {
+            display: block;
+            position: absolute;
+            top: 16px;
+            left: 16px;
+            z-index: 3;
+            color: #4285f4;
+        }
+        </style>
+        <paper-icon-button icon="chat:share" on-tap="_copy" id="btn"></paper-icon-button>
+        <paper-tooltip for="btn" position="bottom">
+         	Share! 
+        </paper-tooltip>
+    </template>
+    <script>
+    'use strict';
+    Polymer({
+        is: 'invitation-link',
+        behaviors: [Webdrop.InvitationLinkBehavior]
+    });
+    </script>
+</dom-module>

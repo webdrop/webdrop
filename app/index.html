@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+    <meta name="generator" content="Webdrop">
+    <title>Webdrop - Share instantly with people nearby!</title>
+    <meta name="author" content="Shreyans Chandak">
+    <meta name="sitename" content="Webdrop">
+    <meta name="keywords" content="Webdrop, drop, share, file, transfer, p2p, file transfer, pwa, polymer, web app, shreyans chandak, Shreyans Chandak">
+    <meta name="description" content="Webdrop is an easy way to share instantly with people nearby!">
+    <meta name="robots" content="index, follow">
+    <meta name="revisit-after" content="10 days">
+    <meta property="og:title" content="Webdrop">
+    <meta property="og:description" content="Webdrop is an easy way to share instantly with people nearby!">
+    <meta property="og:site_name" content="Webdrop">
+    <meta property="og:image" content="images/og-image.jpg">
+    <meta property="og:image:width" content="1239">
+    <meta property="og:image:height" content="649">
+    <meta property="og:image:type" content="image/jpeg" />
+    <meta property="og:url" content="" />
+    <meta property="og:type" content="website" />
+    <meta property="og:author" content="https://facebook.com/ShreyansChandak" />
+    <meta name="twitter:card" content="Webdrop - Share instantly with people nearby!">
+    <meta name="twitter:url" content="">
+    <meta name="twitter:title" content="Webdrop">
+    <meta name="twitter:image" content="images/og-image.jpg" />
+    <meta name="twitter:author" content="@ShreyansChandak" />
+    <meta name="twitter:creator" content="@shreyanschandak">
+    <meta name="twitter:description" content="Webdrop is an easy way to share instantly with people nearby!">
+    <link href="https://plus.google.com/+shreyanschandak" rel="publisher" />
+    <!-- Place favicon.ico in the `app/` directory -->
+    <link rel="shortcut icon" href="favicon.ico" />
+    <link rel="icon" type="image/png" sizes="32x32" href="images/touch/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/touch/favicon-16x16.png">
+    <!-- Chrome for Android theme color -->
+    <meta name="theme-color" content="#3367d6">
+    <!-- Web Application Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <!-- Add to homescreen for Chrome on Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="application-name" content="Webdrop">
+    <link rel="icon" sizes="192x192" href="images/touch/chrome-touch-icon-192x192.png">
+    <link rel="fluid-icon" type="image/png" href="images/touch/chrome-touch-icon-192x192.png">
+    <!-- Add to homescreen for Safari on iOS -->
+    <meta name="HandheldFriendly" content="true" />
+    <meta name="apple-touch-fullscreen" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-title" content="Webdrop">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/touch/apple-touch-icon.png">
+    <!-- Touch Bar MacBook Pro 2016 -->
+    <link rel="mask-icon" href="images/touch/safari-pinned-tab.svg" color="#3372df">
+    <!-- Tile icon for Windows -->
+    <meta name="msapplication-config" content="browserconfig.xml">
+    <meta name="msapplication-TileImage" content="images/touch/mstile-144x144.png">
+    <!-- Tile color for Win8 -->
+    <meta name="msapplication-TileColor" content="#3372DF">
+    <!-- build:css styles/main.css -->
+    <link rel="stylesheet" href="styles/main.css">
+    <!-- endbuild-->
+    <!-- build:js bower_components/webcomponentsjs/webcomponents-lite.min.js async foo="1" -->
+    <script src="bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+    <!-- endbuild -->
+    <!-- Because this project uses vulcanize this should be your only html import
+       in this file. All other imports should go in elements.html -->
+    <link rel="import" href="elements/elements.html" async>
+    <script>
+    window.debug = false;
+    </script>
+</head>
+
+<body class="layout vertical">
+    <script src="scripts/animated-bg.js" inline></script>
+    <span id="browser-sync-binding"></span>
+    <template is="dom-bind" id="app">
+        <connection-wrapper me="{{me}}" loading="{{loading}}" buddies="{{buddies}}"></connection-wrapper>
+        <neon-animated-pages id="pages" selected="0">
+            <x-cards on-switch="_showAbout">
+                <div>
+                    <style is="custom-style">
+                      paper-progress.wd { --paper-progress-active-color: #4981e2; --paper-progress-secondary-color: #75a0e9; }
+                    </style>
+                    <paper-progress indeterminate hidden$="{{!loading}}" class="wd"></paper-progress>
+                    <buddy-finder me="{{me}}" active$="{{loading}}" buddies="{{buddies}}"></buddy-finder>
+                </div>
+            </x-cards>
+            <about-page on-switch="_showApp">
+            </about-page>
+        </neon-animated-pages>
+        <file-receiver></file-receiver>
+        <invitation-link></invitation-link>
+        <paper-toast id="toast" duration="5000">
+        </paper-toast>
+        <paper-toast id="caching-complete" duration="6000" text="Webdrop will now work offline!">
+        </paper-toast>
+        <platinum-sw-register auto-register clients-claim skip-waiting base-uri="bower_components/platinum-sw/bootstrap" on-service-worker-installed="displayInstalledToast">
+            <platinum-sw-cache default-cache-strategy="fastest" cache-config-file="cache-config.json">
+            </platinum-sw-cache>
+        </platinum-sw-register>
+        <platinum-https-redirect></platinum-https-redirect>
+    </template>
+    <!-- build:js scripts/app.js -->
+    <script src="scripts/app.js"></script>
+    <!-- endbuild-->
+</body>
+
+</html>

@@ -1,0 +1,196 @@
+<link rel="import" href="../../bower_components/iron-flex-layout/iron-flex-layout.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-shared-element-animatable-behavior.html">
+<link rel="import" href="../../bower_components/neon-animation/neon-animations.html">
+<link rel="import" href="../../bower_components/paper-styles/paper-styles-classes.html">
+<link rel="import" href="../../bower_components/iron-icon/iron-icon.html">
+<dom-module id="about-page">
+    <template>
+        <style>
+        :host {
+            display: block;
+            overflow: hidden;
+            color: white;
+            z-index: 3;
+            --paper-tooltip: {
+                font-size: 14px;
+                background-color: white;
+                color: #4285f4;
+            }
+            --paper-tooltip-opacity:0.95;
+        }
+        
+        #placeholder {
+            opacity: 0;
+            background-color: #4285f4;
+            @apply(--layout-fit);
+        }
+        
+        #container {
+            @apply(--layout-fit);
+            @apply(--layout-vertical);
+            @apply(--layout-center-center);
+            background-color: #4285f4;
+            padding: 64px 32px 64px 32px;
+            box-sizing: border-box;
+        }
+        
+        .logo {
+            width: 96px;
+            height: 96px;
+        }
+        
+        .slogan {
+            text-align: center;
+        }
+        
+        .paper-font-headline {
+            margin-bottom: 8px;
+            font-size: 32px;
+        }
+        
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        
+        .center {
+            @apply(--layout-vertical);
+            @apply(--layout-center-center);
+        }
+        
+        #footer {
+            position: absolute;
+            left: 50%;
+            margin-left: -160px;
+            width: 320px;
+            bottom: 24px;
+            text-align: center;
+        }
+        
+        @media all and (max-height: 370px) {
+            #footer {
+                width: 320px;
+                bottom: 8px;
+            }
+        }
+        
+        a {
+            display: inline-block;
+            text-align: center;
+        }
+        
+        .donate-icon {
+            padding-top: 32px;
+            width: 32px;
+            height: 32px;
+        }
+        
+        .paper-font-subhead {
+            font-size: 20px;
+        }
+        
+        a.paper-font-subhead {
+            padding-top: 32px;
+        }
+        
+        .share {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            z-index: 10;
+        }
+        
+        .social {
+            margin: 16px;
+            width: 228px;
+        }
+        
+        #btn,
+        .social a {
+            color: white;
+        }
+        
+        .social a {
+            text-decoration: none;
+            padding: 2px 9px 0 9px;
+        }
+        
+        .share a:hover,
+        #btn:hover {
+            color: white;
+        }
+        </style>
+        <div id="placeholder"></div>
+        <div id="container">
+            <div class="share">
+                <paper-icon-button id="btn" icon="chat:close" on-tap="_switch"></paper-icon-button>
+            </div>
+            <div class="center">
+                <iron-icon icon="chat:wifi-tethering" class="logo"></iron-icon>
+                <div class="paper-font-headline">Webdrop</div>
+                <div class="slogan">Share instantly with people nearby!</div>
+            </div>
+            <span id="footer"><a href="https://shreyanschandak.com" target="_blank">Shreyans Chandak</a></span>
+        </div>
+    </template>
+</dom-module>
+<script>
+(function() {
+    Polymer({
+        is: 'about-page',
+        behaviors: [
+            Polymer.NeonSharedElementAnimatableBehavior
+        ],
+        properties: {
+            animationConfig: {
+                value: function() {
+                    return {
+                        'entry': [{
+                            name: 'ripple-animation',
+                            id: 'ripple',
+                            toPage: this
+                        }, {
+                            name: 'fade-out-animation',
+                            node: this.$.placeholder,
+                            timing: {
+                                delay: 250
+                            }
+                        }, {
+                            name: 'fade-in-animation',
+                            node: this.$.container,
+                            timing: {
+                                delay: 50
+                            }
+                        }],
+                        'exit': [{
+                            name: 'opaque-animation',
+                            node: this.$.placeholder
+                        }, {
+                            name: 'fade-out-animation',
+                            node: this.$.container,
+                            timing: {
+                                duration: 0
+                            }
+                        }, {
+                            name: 'reverse-ripple-animation',
+                            id: 'reverse-ripple',
+                            fromPage: this
+                        }]
+                    };
+                }
+            },
+            sharedElements: {
+                value: function() {
+                    return {
+                        'ripple': this.$.placeholder,
+                        'reverse-ripple': this.$.placeholder
+                    };
+                }
+            }
+        },
+        _switch: function() {
+            document.querySelector('#pages').select(0);
+        }
+    });
+})();
+</script>

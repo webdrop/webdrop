@@ -1,0 +1,47 @@
+<script>
+'use strict';
+window.Webdrop = window.Webdrop || {};
+Webdrop.InvitationLinkBehavior = {
+    properties: {
+        contact: {
+            type: String
+        }
+    },
+    _copy: function(e) {
+        if (e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        Polymer.Base.create('textarea');
+        var copyTextarea = this.textarea;
+        copyTextarea.value = this.link;
+        copyTextarea.select();
+        try {
+            var successful = document.execCommand('copy');
+            if (successful) {
+                app.displayToast('Invitation link copied. Share it to send files to friends!');
+            } else {
+                app.displayToast('Oops, unable to copy!');
+            }
+        } catch (err) {
+            app.displayToast('Oops, unable to copy!');
+        }
+        copyTextarea.blur();
+    },
+    get link() {
+        return 'https://' + window.location.host + '/' + this.contact;
+    },
+    get textarea() {
+        var textarea = document.querySelector('#copytextarea');
+        if (!textarea) {
+            textarea = Polymer.Base.create('textarea');
+            textarea.id = 'copytextarea';
+            var style = textarea.style;
+            style.position = 'absolute';
+            style.top = '-10000px';
+            document.body.appendChild(textarea);
+        }
+        return textarea;
+    }
+};
+</script>
